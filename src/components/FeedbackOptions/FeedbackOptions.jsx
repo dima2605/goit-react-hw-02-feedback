@@ -1,27 +1,24 @@
 import PropTypes from 'prop-types';
+import shortid from 'shortid';
 import { Button, ButtonBox } from './FeedbackOptions.styled';
-export default function Feedback({
-  clickButtonGood,
-  clickButtonNeutral,
-  clickButtonBad,
-}) {
+
+export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
     <ButtonBox>
-      <Button type="button" onClick={clickButtonGood}>
-        Good
-      </Button>
-      <Button type="button" onClick={clickButtonNeutral}>
-        Neutral
-      </Button>
-      <Button type="button" onClick={clickButtonBad}>
-        Bad
-      </Button>
+      {options.map(btnName => (
+        <Button
+          key={shortid.generate()}
+          type="button"
+          onClick={() => onLeaveFeedback(btnName)}
+        >
+          {btnName}
+        </Button>
+      ))}
     </ButtonBox>
   );
-}
+};
 
-Feedback.propTypes = {
-  clickButtonGood: PropTypes.func.isRequired,
-  clickButtonNeutral: PropTypes.func.isRequired,
-  clickButtonBad: PropTypes.func.isRequired,
+FeedbackOptions.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string.isRequired),
+  onLeaveFeedback: PropTypes.func.isRequired,
 };

@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { Wrapper } from './App.styled';
 
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import Statistics from './Statistics/Statistics';
-import Feedback from './FeedbackOptions/FeedbackOptions';
 import Section from './Section/Section';
 import Notification from './Notification/Notification';
 
@@ -13,20 +13,10 @@ class App extends Component {
     bad: 0,
   };
 
-  clickButtonNeutral = () => {
-    this.setState(prevState => {
-      return { neutral: prevState.neutral + 1 };
-    });
-  };
-  clickButtonBad = () => {
-    this.setState(prevState => {
-      return { bad: prevState.bad + 1 };
-    });
-  };
-  clickButtonGood = () => {
-    this.setState(prevState => {
-      return { good: prevState.good + 1 };
-    });
+  handleFeedbackOptions = feedback => {
+    this.setState(prevState => ({
+      [feedback]: prevState[feedback] + 1,
+    }));
   };
 
   countTotalFeedback = () => {
@@ -50,10 +40,9 @@ class App extends Component {
     return (
       <Wrapper>
         <Section title="Please leave feedback">
-          <Feedback
-            clickButtonGood={this.clickButtonGood}
-            clickButtonNeutral={this.clickButtonNeutral}
-            clickButtonBad={this.clickButtonBad}
+          <FeedbackOptions
+            options={['good', 'neutral', 'bad']}
+            onLeaveFeedback={this.handleFeedbackOptions}
           />
         </Section>
         <Section title="Statistics">
